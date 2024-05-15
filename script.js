@@ -10,6 +10,7 @@ const taskTemplate = document.getElementById("task-template")
 const newTaskForm = document.getElementById("new-task-form")
 const newTaskInput = document.getElementById("new-task-input")
 const clearTaskListButton = document.getElementById("clear-task-list")
+const uncheckListButton = document.getElementById("uncheck-list-button")
 
 const LOCAL_STORAGE_LIST_KEY = "task.lists"
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId"
@@ -141,6 +142,15 @@ clearTaskListButton.addEventListener("click", e => {
 deleteListButton.addEventListener("click", e => {
     lists = lists.filter(list => list.id !== selectedListId)
     selectedListId = null
+    save()
+    render()
+})
+
+uncheckListButton.addEventListener("click", e => {
+    const selectedList = lists.find(list => list.id === selectedListId)
+    for (let i = 0; i < selectedList.tasks.length; i++){
+        selectedList.tasks[i].complete = false
+    }
     save()
     render()
 })
